@@ -1,0 +1,386 @@
+/* =========================================================
+   0. TOKENS
+========================================================= */
+:root{
+    --primary-color-mov: #6C5CE7;
+    --primary-color-mov-dark: #5546c9;
+    --accent-lime: #d7e75c;
+    --background-color-blanc: #ffffff;
+    --page-bg: #f2f1fb;
+    --color: #14132e;
+    --color-muted: #6b7280;
+    --radius-lg: 20px;
+    --radius-md: 14px;
+    --radius-pill: 999px;
+    --shadow-soft: 0 4px 16px rgba(20, 19, 46, 0.06);
+    --shadow-hover: 0 16px 32px rgba(108, 92, 231, 0.18);
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+html{
+    scroll-behavior: smooth;
+}
+
+img{
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+body{
+    background:
+        radial-gradient(circle at 10% 0%, rgba(108,92,231,0.08), transparent 40%),
+        radial-gradient(circle at 90% 20%, rgba(215,231,92,0.10), transparent 35%),
+        var(--page-bg);
+    font-family: 'Inter', system-ui, sans-serif;
+    color: var(--color);
+    overflow: scroll;
+}
+
+h1, h2, h3, h4, h5, h6, .navbar-brand, .modal-title{
+    font-family: 'Poppins', 'Inter', sans-serif;
+}
+
+
+/* =========================================================
+   1. ANIMATIONS
+========================================================= */
+@keyframes fadeInUp{
+    from{ opacity: 0; transform: translateY(18px); }
+    to{ opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn{
+    from{ opacity: 0; }
+    to{ opacity: 1; }
+}
+
+@keyframes shimmer{
+    0%{ background-position: -400px 0; }
+    100%{ background-position: 400px 0; }
+}
+
+@keyframes pulseRing{
+    0%{ box-shadow: 0 0 0 0 rgba(14,13,46,0.35); }
+    70%{ box-shadow: 0 0 0 14px rgba(14,13,46,0); }
+    100%{ box-shadow: 0 0 0 0 rgba(14,13,46,0); }
+}
+
+@keyframes slideInRight{
+    from{ opacity: 0; transform: translateX(24px); }
+    to{ opacity: 1; transform: translateX(0); }
+}
+
+@media (prefers-reduced-motion: reduce){
+    *{
+        animation-duration: 0.001ms !important;
+        transition-duration: 0.001ms !important;
+    }
+}
+
+
+/* =========================================================
+   2. NAVBAR
+========================================================= */
+.navbar{
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    background-color: rgba(255,255,255,0.85) !important;
+    transition: box-shadow .3s var(--ease);
+}
+
+.navbar-brand{
+    letter-spacing: 0.5px;
+    transition: filter .25s var(--ease);
+}
+.navbar-brand:hover{
+    filter: brightness(1.15);
+}
+
+.nav-link svg{
+    transition: transform .25s var(--ease), color .25s var(--ease);
+    color: var(--primary-color-mov);
+}
+.nav-link:hover svg{
+    transform: scale(1.15) translateY(-1px);
+}
+
+
+/* =========================================================
+   3. POST CARDS
+========================================================= */
+.post-card{
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft) !important;
+    border: none !important;
+    transition: transform .3s var(--ease), box-shadow .3s var(--ease);
+    animation: fadeInUp .5s var(--ease) both;
+}
+
+.post-card:hover{
+    transform: translateY(-6px);
+    box-shadow: var(--shadow-hover) !important;
+}
+
+.post-card .card-header{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 600;
+    background: linear-gradient(120deg, var(--primary-color-mov), #8b7ff0) !important;
+    color: #fff !important;
+    border: none;
+}
+.post-card .card-header b{
+    color: #fff !important;
+}
+.post-card .card-header img{
+    box-shadow: 0 0 0 2px rgba(255,255,255,0.7);
+}
+
+.post-card .card-body img.w-100{
+    border-radius: var(--radius-md);
+    transition: transform .5s var(--ease);
+}
+.post-card:hover .card-body img.w-100{
+    transform: scale(1.015);
+}
+
+.post-timestamp{
+    color: var(--color-muted) !important;
+    font-size: 13px;
+    font-weight: 500;
+}
+
+.tags{
+    background: linear-gradient(120deg, var(--primary-color-mov), var(--primary-color-mov-dark));
+    color: #ffffff;
+    padding: 5px 12px;
+    border-radius: var(--radius-pill);
+    margin: 6px 6px 0 0;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-block;
+    transition: transform .2s var(--ease);
+}
+.tags:hover{
+    transform: translateY(-2px);
+}
+
+
+/* =========================================================
+   4. ZONE "COMMENTAIRES" CLIQUABLE + OUVERTURE ANIMÉE
+========================================================= */
+.post-comments-toggle{
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 6px 10px;
+    margin: -6px -10px 0;
+    border-radius: var(--radius-md);
+    transition: background-color .2s var(--ease);
+}
+.post-comments-toggle:hover{
+    background-color: rgba(108,92,231,0.07);
+}
+.post-comments-toggle svg{
+    color: var(--primary-color-mov);
+    transition: transform .25s var(--ease);
+}
+.post-comments-toggle:hover svg{
+    transform: rotate(-8deg) scale(1.1);
+}
+
+.comments-section{
+    max-height: 0;
+    opacity: 0;
+    overflow: hidden;
+    margin-top: 0;
+    transition: max-height .45s var(--ease), opacity .35s ease, margin-top .35s var(--ease);
+}
+.comments-section.open{
+    max-height: 2000px;
+    opacity: 1;
+    margin-top: 14px;
+}
+
+.comment-item{
+    padding: 8px 0;
+    border-bottom: 1px dashed rgba(20,19,46,0.08);
+    animation: fadeIn .4s var(--ease) both;
+}
+.comment-item:last-child{
+    border-bottom: none;
+}
+
+.comment-form{
+    gap: 8px;
+}
+.d-none-important{
+    display: none !important;
+}
+.comment-form .comment-input{
+    border-radius: var(--radius-pill);
+    padding: 8px 16px;
+}
+.btn-send-comment{
+    flex-shrink: 0;
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background-color: var(--primary-color-mov);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color .2s var(--ease), transform .15s var(--ease);
+}
+.btn-send-comment:hover{
+    background-color: var(--primary-color-mov-dark);
+    transform: scale(1.08) rotate(8deg);
+}
+.btn-send-comment:active{
+    transform: scale(0.95);
+}
+
+
+/* =========================================================
+   5. SKELETON DE CHARGEMENT
+========================================================= */
+.skeleton-card{
+    border-radius: var(--radius-lg);
+    overflow: hidden;
+    box-shadow: var(--shadow-soft);
+    margin-bottom: 1rem;
+    background: #fff;
+    padding: 16px;
+}
+.skeleton-line, .skeleton-block{
+    border-radius: var(--radius-md);
+    background: linear-gradient(90deg, #ececf5 0px, #f7f7fc 40px, #ececf5 80px);
+    background-size: 800px 100%;
+    animation: shimmer 1.4s infinite linear;
+}
+.skeleton-block{
+    height: 220px;
+    margin-bottom: 12px;
+}
+.skeleton-line{
+    height: 14px;
+    margin-bottom: 8px;
+}
+.skeleton-line.w-60{ width: 60%; }
+.skeleton-line.w-40{ width: 40%; }
+.skeleton-line.w-90{ width: 90%; }
+
+
+/* =========================================================
+   6. ALERTES
+========================================================= */
+.custom-alert-in{
+    animation: slideInRight .35s var(--ease) both;
+}
+
+
+/* =========================================================
+   7. BOUTON FLOTTANT "+"
+========================================================= */
+.btnPlus{
+    padding: 0px;
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    background-color: #0e0d37;
+    color: #ffffff;
+    border: none;
+    text-align: center;
+    line-height: 10px;
+    font-size: 30px;
+    position: fixed;
+    bottom: 5%;
+    right: 5%;
+    z-index: 1111111111111;
+    box-shadow: 0 10px 24px rgba(14,13,46,0.35);
+    transition: background-color .25s var(--ease), transform .25s var(--ease);
+    animation: pulseRing 2.4s infinite;
+}
+.btnPlus:hover{
+    background-color: var(--primary-color-mov);
+    transform: rotate(90deg) scale(1.08);
+}
+.btnPlus:active{
+    transform: rotate(90deg) scale(0.94);
+}
+
+
+/* =========================================================
+   8. BOUTONS D'AUTHENTIFICATION
+========================================================= */
+.container.mt-5{
+    margin-top: 90px !important;
+}
+
+#btnlogin, #btnRegister{
+    background-color: #0e0d37;
+    color: #ffffff;
+    font-size: 15px;
+    border-radius: var(--radius-pill);
+    padding: 10px 20px;
+    border: none;
+    transition: background-color .25s var(--ease), transform .15s var(--ease), box-shadow .25s var(--ease);
+}
+#btnlogin:hover, #btnRegister:hover{
+    background-color: var(--primary-color-mov);
+    box-shadow: 0 8px 18px rgba(108,92,231,0.35);
+    transform: translateY(-2px);
+}
+#btnlogin:active, #btnRegister:active{
+    transform: translateY(0) scale(0.97);
+}
+
+#btnLoginO, #btnRegiser, #logOut{
+    border: 1.5px solid var(--primary-color-mov);
+    color: var(--primary-color-mov);
+    background-color: #ffffff;
+    border-radius: var(--radius-pill);
+    font-weight: 600;
+    transition: background-color .25s var(--ease), color .25s var(--ease), transform .15s var(--ease);
+}
+#btnLoginO:hover, #btnRegiser:hover, #logOut:hover{
+    background-color: var(--primary-color-mov);
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+#btnLoginO:active, #btnRegiser:active, #logOut:active{
+    transform: translateY(0) scale(0.97);
+}
+
+#profile-div img{
+    transition: transform .25s var(--ease);
+}
+#profile-div:hover img{
+    transform: scale(1.08);
+}
+
+
+/* =========================================================
+   9. MODALS
+========================================================= */
+.modal-content{
+    border-radius: var(--radius-lg);
+    border: none;
+    box-shadow: 0 24px 48px rgba(20,19,46,0.25);
+}
+.modal.fade .modal-dialog{
+    transition: transform .3s var(--ease), opacity .3s var(--ease);
+}
+.form-control{
+    border-radius: var(--radius-md);
+    transition: box-shadow .2s var(--ease), border-color .2s var(--ease);
+}
+.form-control:focus{
+    border-color: var(--primary-color-mov);
+    box-shadow: 0 0 0 3px rgba(108,92,231,0.15);
+}

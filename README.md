@@ -1,4 +1,4 @@
-# Socialidea
+# SociaLidea
 
 Mini réseau social en HTML/CSS/JavaScript, connecté à l'API Tarmeez Academy.
 
@@ -22,12 +22,9 @@ HTML, CSS, JavaScript, Bootstrap 5, Axios, API Tarmeez Academy.
 git clone https://github.com/soundes553/SociaLidea.git
 cd SociaLidea
 ```
+Ouvre `index.html` dans le navigateur
 
-Ouvre `index.html` dans le navigateur, ou lance un serveur local :
 
-```bash
-python -m http.server 5500
-```
 
 ## Structure
 
